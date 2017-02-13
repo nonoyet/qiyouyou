@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	
+	<aop:config>
+		<aop:pointcut id="baseTxPointcut"
+			expression="execution(* base.service.impl.*ServiceImpl.*(..))" />
+		<aop:pointcut id="lnetTxPointcut"
+			expression="execution(* com.lnet.qa.service.*Service.*(..))" />
+		<aop:advisor id="baseTx" advice-ref="txAdvice"
+			pointcut-ref="baseTxPointcut" order="2" />
+		<aop:advisor id="lnetTx" advice-ref="txAdvice"
+			pointcut-ref="lnetTxPointcut" order="3" />
+	</aop:config>
+
+
+	<tx:advice id="txAdvice">
+		<tx:attributes>
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="logon" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="apply*" propagation="REQUIRED" />
+			<tx:method name="forward*" propagation="REQUIRED" />
+			<tx:method name="*$Transaction" propagation="REQUIRED" />
+			<tx:method name="process*" propagation="REQUIRED" />
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+
+
+	<bean id="aspect" class="base.service.aop.AspectAdvice">
+	</bean>
+
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="actionPointcutx"
+			expression="execution(* base..*Action.update(..))||execution(* base..*Action.save*(..))||execution(* base..*Action.delete(..))" />
+		<aop:pointcut id="servicePointcutx" expression="execution(* com.lnet.qa..*ServiceImpl.*$Transaction(..))||execution(* base..*ServiceImpl.update*(..))||execution(* base..*ServiceImpl.save*(..))||execution(* com.lnet.qingbao..*ServiceImpl.save*(..))" />
+		
+		<aop:aspect ref="aspect">
+			<aop:before pointcut-ref="actionPointcutx" method="actionAdvice" />
+			<aop:after pointcut-ref="servicePointcutx" method="afterServiceAdvice" />
+			<aop:after pointcut-ref="actionPointcutx" method="afterActionAdvice" />
+		</aop:aspect>
+	</aop:config>
+	
+	<bean id="service" class="base.service.impl.BaseServiceImpl">
+		<property name="dao" ref="dao" />
+	</bean>
+	
+	<!-- change service类 -->
+	<bean id="commonService" class="com.lnet.service.impl.CommonServiceImpl" parent="service"></bean>
+	<!-- change serviceImpl实现类 -->
+	<bean id="mainService" class="com.lnet.service.impl.MainServiceImpl" scope="prototype">
+		<property name="dao" ref="dao" />
+	</bean>
+	
+   
+	
+</beans>
+
+
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<!-- struts-base  struts-default -->
+	<package name="struts-work" extends="login-validate" namespace="/">
+		<global-results>
+			<result name="fail">/errorPage.jsp</result>
+			<result name="noRight">/errorNoRight.jsp</result>
+			<result name="noExist">/common/commonNoExist.jsp</result>
+			<result name="saveEnding">/pages/jsp/common/commonSaveEnding.jsp</result>
+			<result name="notFound">/pages/jsp/error_beatuy.html</result>
+		</global-results>
+		
+		
+	</package>
+</struts>
