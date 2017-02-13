@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<!--  baseAction （common） -->
+	<bean id="baseAction" class="com.lnet.action.BaseAction" scope="prototype">
+		<property name="service" ref="service"></property> 
+	</bean>
+	
+	<!-- pageAction分页 （common）-->
+	<bean id="pageAction" class="com.lnet.action.PageAction" scope="prototype" parent="baseAction">
+		<property name="commonService" ref="commonService"></property>
+	</bean>
+   
+    <!--  要修改的都加在下面   -->
+	<bean id="mainAction" class="com.lnet.action.MainAction" scope="prototype" parent="pageAction">
+		<property name="mainService" ref="mainService"></property>
+	</bean>
+	<bean id="firstpageAction" class="com.lnet.action.firstpage.FirstPageAction" scope="prototype" parent="pageAction">
+		<property name="mainService" ref="mainService"></property>
+	</bean>
+	<bean id="feedBackAction" class="com.lnet.action.firstpage.FeedBackAction" scope="prototype" parent="pageAction">
+		<property name="mainService" ref="mainService"></property>
+	</bean>
+  	
+  	
+  	
+</beans>

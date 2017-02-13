@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.multipart.maxSize" value="999999999" />
+	<package name="struts-base" extends="login-validate" namespace="/">
+	<!-- common -->
+
+		<!-- action找不到action时 跳转到错误页面去 -->
+		<default-action-ref name="notFoundAction" />
+
+		<global-results>
+			<result name="error">/pages/jsp/error.jsp</result>
+			<!-- 找不到地址时跳转到首页 -->
+			<result name="notFound" type="redirect">/</result>
+			
+			<result name="login">/pages/jsp/login.jsp</result>
+		</global-results>
+
+		<!--找不到action时跳转到首页-->
+		<action name="notFoundAction">
+			<result type="redirect">/pages/jsp/common/exception/error_beatuy.jsp</result>
+		</action>
+		
+		<action name="loginOtherPlace">
+			<result type="redirect">/pages/jsp/common/exception/error_beatuy.jsp</result>
+		</action>
+		
+		<action name="treeDialog" class="treeDialogAction">
+            <result name="tree" type="json">
+                <param name="ignoreHierarchy">false</param>
+                <param name="includeProperties">treeData</param>
+            </result>
+        </action>
+        
+        <action name="pageAction" class="pageAction">
+            
+        </action>
+        
+	<!-- common -->		
+
+	<!-- 项目初期初始化 -->
+	<action name="init" class="initAction">
+	</action>
+		
+</package>
+</struts>

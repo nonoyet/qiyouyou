@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<!-- struts-base  struts-default -->
+	<package name="struts-login" extends="struts-default,json-default" namespace="/">
+		<global-results>
+			<result name="fail">/errorPage.jsp</result>
+			<result name="noRight">/errorNoRight.jsp</result>
+			<result name="noExist">/common/commonNoExist.jsp</result>
+			<result name="saveEnding">/pages/jsp/common/commonSaveEnding.jsp</result>
+		</global-results>
+		
+		<action name="main" class="mainAction">
+			<result name="index">/pages/jsp/pt/firstpage/index.jsp</result>
+           
+		</action>
+		<!-- 首页 -->
+		<action name="firstpage" class="firstpageAction">
+			<result name="index" >/pages/jsp/pt/menu/pt_index.jsp</result>
+		</action>
+		
+		<!-- 反馈 -->
+		<action name="feedBack" class="feedBackAction">
+			
+		</action>
+		
+	</package>
+</struts>
