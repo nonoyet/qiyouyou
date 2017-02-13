@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="login-validate" extends="struts-default,json-default" namespace="/">
+		<interceptors>
+			<!-- 验证登录拦截器(所有方法) -->
+            <interceptor name="checkLogin" class="com.lnet.service.CheckLoginInterceptor"/>
+            
+		</interceptors>
+		
+		<global-results >
+			<result name="not_login">/pages/jsp/pt/login/pt_login.jsp</result>
+			<result name="no_admin_permission">/pages/jsp/common/exception/no_admin_permission.jsp</result>
+			<result name="no_xt_admin_permission">/pages/jsp/common/exception/no_xt_admin_permission.jsp</result>
+			<result name="not_match">/pages/jsp/common/exception/not_match.jsp</result>
+			<result name="not_found">/pages/jsp/common/exception/error_beatuy.jsp</result>
+		</global-results>
+      
+	</package>
+</struts>
