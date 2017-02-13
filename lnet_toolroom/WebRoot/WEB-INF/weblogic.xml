@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<weblogic-web-app xmlns="http://www.bea.com/ns/weblogic/90">
+	<!--
+		security-role-assignment> <role-name>PrivilegedUser</role-name>
+		<principal-name>myrealm</principal-name> </security-role-assignment
+	-->
+   <container-descriptor>
+      <prefer-web-inf-classes>true</prefer-web-inf-classes>
+   </container-descriptor>
+	<context-root>/tools</context-root>
+</weblogic-web-app>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	version="2.4"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	
+	<display-name>tools</display-name>
+	<!-- 定时器 -->
+    <listener>
+       <listener-class>com.lnet.util.ContextListener</listener-class>
+    </listener>
+        
+     <!--添加Session监听器
+     -->
+	 <listener> 
+	    <listener-class> com.lnet.listener.SessionListener </listener-class> 
+	 </listener>
+   
+	<filter>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<filter-class>com.lnet.spring.CommonOpenSessionInViewFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- Sttuts2过滤器   -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+    <!-- 初始化服务器web容器，得到context -->
+	<servlet>
+		<servlet-name>initialContext</servlet-name>
+		<servlet-class>com.lnet.servlet.InitialContext</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>initialContext</servlet-name>
+		<url-pattern>/background/servlet/initialContext.servlet</url-pattern>
+	</servlet-mapping>
+	<!-- 数据库连接 -->
+	<servlet>
+		<servlet-name>dbpool-monitor</servlet-name>
+		<servlet-class>org.logicalcobwebs.proxool.admin.servlet.AdminServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>dbpool-monitor</servlet-name>
+		<url-pattern>/dbpool-monitor.servlet</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 自动下载的文件类型 -->
+	<mime-mapping> 
+		<extension>txt</extension> 
+		<mime-type>application/txt</mime-type> 
+	</mime-mapping>
+	
+	<mime-mapping> 
+		<extension>doc</extension>
+		<mime-type>application/msword</mime-type> 
+	</mime-mapping>
+	
+	<mime-mapping>
+        <extension>ppt</extension>
+        <mime-type>application/mspowerpoint</mime-type>
+    </mime-mapping>
+    
+	<mime-mapping> 
+		<extension>xls</extension>
+		<mime-type>application/msexcel</mime-type> 
+	</mime-mapping> 
+	
+	<mime-mapping> 
+		<extension>pdf</extension> 
+		<mime-type>application/pdf</mime-type> 
+	</mime-mapping>
+	
+	<mime-mapping> 
+		<extension>zip</extension> 
+		<mime-type>application/zip</mime-type> 
+	</mime-mapping>
+	
+	<mime-mapping> 
+		<extension>rar</extension> 
+		<mime-type>application/rar</mime-type> 
+	</mime-mapping>
+	
+	<mime-mapping> 
+		<extension>chm</extension> 
+		<mime-type>application/mshelp</mime-type>
+	</mime-mapping> 
+	<!-- 自定义标签库   -->
+   <jsp-config>
+	<taglib>
+        <!-- 标签库的uri路径即jsp头文件中声明<%@ taglib uri="/mytaglib" prefix="cc"%>的uri -->
+        <taglib-uri>/myTaglib.tld</taglib-uri>
+        <!-- tld文件所在的位置 -->
+        <taglib-location>/WEB-INF/myTaglib.tld</taglib-location>
+    </taglib>
+    </jsp-config>
+	<!-- 404页面捕获 -->
+	<error-page>
+  		<error-code>404</error-code>
+  		<location>/pages/jsp/common/exception/error_beatuy.jsp</location>
+	</error-page> 
+	
+   
+	
+		
+</web-app>
